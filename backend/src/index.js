@@ -1,10 +1,10 @@
 const dotenv = require('dotenv');
 dotenv.config();
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-import path from "path";
+const path = require('path');
 
 import { connectDB } from "./lib/db.js";
 
