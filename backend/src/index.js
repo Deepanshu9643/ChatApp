@@ -38,8 +38,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 server.listen(PORT, () => {
-
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
-
   connectDB();
 });

@@ -4,6 +4,7 @@ import Message from "../models/message.model.js";
 import cloudinary from "../lib/cloudinary.js";
 import { getReceiverSocketId, io } from "../lib/socket.js";
 
+// To fetch all users except the logged-in user, for showing them in the chat sidebar.
 export const getUsersForSidebar = async (req, res) => {
   try {
     const loggedInUserId = req.user._id;
@@ -16,6 +17,8 @@ export const getUsersForSidebar = async (req, res) => {
   }
 };
 
+
+// To fetch all chat messages between the logged-in user and another user.
 export const getMessages = async (req, res) => {
   try {
     const { id: userToChatId } = req.params;
@@ -35,6 +38,8 @@ export const getMessages = async (req, res) => {
   }
 };
 
+
+// To send a new message, with optional image, and notify the receiver via socket.
 export const sendMessage = async (req, res) => {
   try {
     const { text, image } = req.body;
