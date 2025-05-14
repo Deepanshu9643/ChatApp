@@ -50,7 +50,7 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="p-4 w-full">
+  <div className="p-4 w-full">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
@@ -71,43 +71,18 @@ const MessageInput = () => {
         </div>
       )}
 
-    <div className="p-2 bg-gray-900 w-full">
-  <form
-    onSubmit={handleSendMessage}
-    className="flex items-center bg-zinc-800 rounded-full px-4 py-2 gap-3"
-  >
-    {/* Emoji / icon on left */}
-    <button type="button" className="text-zinc-400">
-      <Smile size={22} />
-    </button>
-
-    {/* Input */}
+     <form
+  onSubmit={handleSendMessage}
+  className="flex flex-wrap items-center gap-2"
+>
+  <div className="flex-1 flex gap-2">
     <input
       type="text"
-      className="flex-1 bg-transparent outline-none text-white placeholder-zinc-400"
-      placeholder="Message"
+      className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+      placeholder="Type a message..."
       value={text}
       onChange={(e) => setText(e.target.value)}
     />
-
-    {/* Icons on right */}
-    <div className="flex items-center gap-3 text-zinc-400">
-      <button type="button">
-        <Paperclip size={20} />
-      </button>
-      <button type="button">
-        <IndianRupee size={20} />
-      </button>
-      <button
-        type="button"
-        onClick={() => fileInputRef.current?.click()}
-        className={imagePreview ? "text-emerald-500" : ""}
-      >
-        <Camera size={20} />
-      </button>
-    </div>
-
-    {/* Hidden file input */}
     <input
       type="file"
       accept="image/*"
@@ -115,9 +90,24 @@ const MessageInput = () => {
       ref={fileInputRef}
       onChange={handleImageChange}
     />
-  </form>
-</div>
-
+    <button
+      type="button"
+      className={`flex btn btn-circle ${
+        imagePreview ? "text-emerald-500" : "text-zinc-400"
+      }`}
+      onClick={() => fileInputRef.current?.click()}
+    >
+      <Image size={200} />
+    </button>
+  </div>
+  <button
+    type="submit"
+    className="btn btn-sm btn-circle"
+    disabled={!text.trim() && !imagePreview}
+  >
+    <Send size={22} />
+  </button>
+</form>
 
     </div>
   );
