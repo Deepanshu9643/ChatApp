@@ -97,7 +97,7 @@ const MessageInput = () => {
       }`}
       onClick={() => fileInputRef.current?.click()}
     >
-      <Image size={200} />
+      <Image size={20} />
     </button>
   </div>
   <button
