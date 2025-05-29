@@ -25,7 +25,7 @@ export const getMessages = async (req, res) => {
     const myId = req.user._id;
 
     const messages = await Message.find({
-      $or: [
+      $or: [                                             //returns messages where either you sent the message or received it.
         { senderId: myId, receiverId: userToChatId },
         { senderId: userToChatId, receiverId: myId },
       ],
@@ -62,10 +62,17 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    const receiverSocketId = getReceiverSocketId(receiverId);
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newMessage", newMessage);
-    }
+ const receiverSocketId = getReceiverSocketId(receiverId);
+const senderSocketId = getReceiverSocketId(senderId); // this is important
+
+if (receiverSocketId) {
+  io.to(receiverSocketId).emit("newMessage", newMessage);
+}
+
+if (senderSocketId) {
+  io.to(senderSocketId).emit("newMessage", newMessage);
+}
+
 
     res.status(201).json(newMessage);
   } catch (error) {

@@ -5,3 +5,4 @@ export function formatMessageTime(date) {
     hour12: false,
   });
 }
+//Formats it to a time string like "14:30" (i.e., 2:30 PM in 24-hour format).

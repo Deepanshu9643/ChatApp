@@ -33,6 +33,7 @@ export const useChatStore = create((set, get) => ({
       set({ isMessagesLoading: false });
     }
   },
+  
   sendMessage: async (messageData) => {
     const { selectedUser, messages } = get();
     try {
@@ -42,6 +43,8 @@ export const useChatStore = create((set, get) => ({
       toast.error(error.response.data.message);
     }
   },
+
+  // Listen for new messages from the selected user via WebSocket
 
   subscribeToMessages: () => {
     const { selectedUser } = get();
@@ -59,6 +62,7 @@ export const useChatStore = create((set, get) => ({
     });
   },
 
+  // Stop listening for "newMessage" events.Best practice: Always clean up old listeners when setting up new ones.
   unsubscribeFromMessages: () => {
     const socket = useAuthStore.getState().socket;
     socket.off("newMessage");
