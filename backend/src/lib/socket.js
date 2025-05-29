@@ -22,7 +22,7 @@ io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
 
   // can track which socket belongs to which user.Key: Value
-  const userId = socket.handshake.auth.userId; //  gives you the query parameters sent by the client
+  const userId = socket.handshake.query.userId; //  gives you the query parameters sent by the client
   if (userId) userSocketMap[userId] = socket.id;
 
   // io.emit() is used to send events to all the connected clients
