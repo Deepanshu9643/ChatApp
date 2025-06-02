@@ -46,21 +46,24 @@ export const useChatStore = create((set, get) => ({
 
   // Listen for new messages from the selected user via WebSocket
 
-  subscribeToMessages: () => {
-    const { selectedUser } = get();
-    if (!selectedUser) return;
+subscribeToMessages: () => {
+  const { selectedUser } = get();
+  if (!selectedUser) return;
 
-    const socket = useAuthStore.getState().socket;
+  const { authUser, socket } = useAuthStore.getState();
 
-    socket.on("newMessage", (newMessage) => {
-      const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
-      if (!isMessageSentFromSelectedUser) return;
+  socket.on("newMessage", (newMessage) => {
+    const isChattingWithSenderOrReceiver =
+      newMessage.senderId === selectedUser._id || newMessage.receiverId === selectedUser._id;
 
-      set({
-        messages: [...get().messages, newMessage],
-      });
+    if (!isChattingWithSenderOrReceiver) return;
+
+    set({
+      messages: [...get().messages, newMessage],
     });
-  },
+  });
+},
+
 
   // Stop listening for "newMessage" events.Best practice: Always clean up old listeners when setting up new ones.
   unsubscribeFromMessages: () => {
